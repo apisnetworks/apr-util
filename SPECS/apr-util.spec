@@ -25,7 +25,11 @@ Group: Development/Libraries
 Epoch: %{epoch}
 Summary: APR utility library development kit
 Requires: apr-util = %{epoch}:%{version}-%{release}, apr-devel
+%if 0%{?rhel} >= 9
+Requires: libdb-devel, expat-devel
+%else
 Requires: db4-devel, expat-devel
+%endif
 
 %description devel
 This package provides the support files which can be used to 
@@ -37,7 +41,11 @@ library of C data structures and routines.
 Group: Development/Libraries 
 Epoch: %{epoch}
 Summary: APR utility library DBM driver
+%if 0%{?rhel} >= 9
+BuildRequires: libdb-devel
+%else
 BuildRequires: db4-devel
+%endif
 Requires: apr-util = %{epoch}:%{version}-%{release}
 
 %description dbm
