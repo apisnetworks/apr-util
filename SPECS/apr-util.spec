@@ -4,7 +4,7 @@
 Summary: Apache Portable Runtime Utility library
 Name: apr-util
 Epoch: %{epoch}
-Version: 1.6.1
+Version: 1.6.3
 Release: 1
 License: Apache Software License
 Group: System Environment/Libraries
@@ -25,7 +25,7 @@ Group: Development/Libraries
 Epoch: %{epoch}
 Summary: APR utility library development kit
 Requires: apr-util = %{epoch}:%{version}-%{release}, apr-devel
-%if 0%{?rhel} >= 9
+%if 0%{?rhel} >= 8
 Requires: libdb-devel, expat-devel
 %else
 Requires: db4-devel, expat-devel
@@ -37,11 +37,21 @@ build applications using the APR utility library.  The mission
 of the Apache Portable Runtime (APR) is to provide a free 
 library of C data structures and routines.
 
+%package bdb
+Group: Development/Libraries
+Epoch: %{epoch}
+Requires: apr-util-dbm = %{epoch}:%{version}-%{release}
+Summary: APR utility BerkeleyDB driver
+
+%description bdb
+Dummy package to solve deps.
+
 %package dbm
 Group: Development/Libraries 
 Epoch: %{epoch}
 Summary: APR utility library DBM driver
-%if 0%{?rhel} >= 9
+Provides: apr-util-bdb = %{epoch}:%{version}-%{release}
+%if 0%{?rhel} >= 8
 BuildRequires: libdb-devel
 %else
 BuildRequires: db4-devel
@@ -179,6 +189,8 @@ rm -rf $RPM_BUILD_ROOT
 %files mysql
 %defattr(-,root,root,-)
 %{_libdir}/apr-util-%{apuver}/apr_dbd_mysql*
+
+%files bdb
 
 %files sqlite
 %defattr(-,root,root,-)
